@@ -80,8 +80,6 @@ class CharInfo extends Component {
 const View = ({char}) => {
     
     const {name, description, thumbnail, homepage, wiki, comics} = char
-    console.log(typeof(comics))
-    console.log(comics)
     let imgStyle = {'objectFit' : 'cover'}
 
     if (thumbnail === 'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg') {
