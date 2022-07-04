@@ -1,4 +1,5 @@
 import AppHeader from "../appHeader/AppHeader";
+import AppBanner from "../appBanner/AppBanner";
 import RandomChar from "../randomChar/RandomChar";
 import CharList from "../charList/CharList";
 import CharInfo from "../charInfo/CharInfo";
@@ -20,6 +21,7 @@ const App = () => {
     return (
         <div className="app">
             <AppHeader/>
+            <AppBanner/>
             <main>
                 <ComicsList/>
                 {/* <RandomChar/>
