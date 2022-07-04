@@ -22,9 +22,9 @@ const CharList = (props) => {
     const onRequest = (offset) => {
         onCharsListLoading()
         marvelService
-            .getAllCharacters(offset)
-            .then(onCharsListLoaded)
-            .catch(onError)
+        .getAllCharacters(offset)
+        .then(onCharsListLoaded)
+        .catch(onError)
     }
 
     const onCharsListLoading = () => {
