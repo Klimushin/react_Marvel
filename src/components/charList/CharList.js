@@ -1,34 +1,27 @@
 import './charList.scss';
 import { useEffect, useState } from 'react';
-import MarvelService from '../../services/MarvelService';
+import useMarvelService from '../../services/MarvelService';
 import ErrorMessage from '../../errorMessage/ErrorMessage';
 import Spinner from '../../spinner/Spinner';
 
 const CharList = (props) => {
     
-    const [data, setData] = useState([])
-    const [loading, setLoading] = useState(true)
-    const [error, setError] = useState(false)
+    const [data, setData] = useState([])    
     const [newItemLoading, setNewItemLoading] = useState(false)
     const [offset, setOffset] = useState(210)
     const [charEnded, setCharEnded] = useState(false)
     
-    const marvelService = new MarvelService()
+    const {loading, error, getAllCharacters} = useMarvelService()
 
     useEffect(() => {
-        onRequest()
+        onRequest(offset, true)
     }, [])    
    
-    const onRequest = (offset) => {
-        onCharsListLoading()
-        marvelService
-        .getAllCharacters(offset)
-        .then(onCharsListLoaded)
-        .catch(onError)
-    }
-
-    const onCharsListLoading = () => {
+    const onRequest = (offset, initial) => {
+        initial ? setNewItemLoading(false) : setNewItemLoading(true)
         setNewItemLoading(true)
+        getAllCharacters(offset)
+            .then(onCharsListLoaded)
     }
 
     const onCharsListLoaded = (newData) => {
@@ -38,15 +31,9 @@ const CharList = (props) => {
         }
 
         setData(data => [...data, ...newData])
-        setLoading(loading => false)       
         setNewItemLoading(newItemLoading => false)
         setOffset(offset => offset + 9)
         setCharEnded( charEnded => ended)
-    }
-
-    const onError = () => {       
-        setLoading(loading => false)
-        setError(error => true)
     }
    
     const listView = (data) => {
@@ -74,14 +61,13 @@ const CharList = (props) => {
     
     const itemList = listView(data)
     const errorMessage = error ? <ErrorMessage/> : null
-    const spinner = loading ? <Spinner/> : null
-    const content = !(loading || error) ? itemList : null
-    
+    const spinner = loading && !newItemLoading ? <Spinner/> : null
+       
     return (
         <div className="char__list">
             {errorMessage}
             {spinner}              
-            {content}                                   
+            {itemList}                                   
             <button 
                 className="button button__main button__long"
                 disabled={newItemLoading}
