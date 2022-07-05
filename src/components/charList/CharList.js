@@ -2,7 +2,7 @@ import './charList.scss';
 import { useEffect, useState } from 'react';
 import useMarvelService from '../../services/MarvelService';
 import ErrorMessage from '../../errorMessage/ErrorMessage';
-import Spinner from '../../spinner/Spinner';
+import Spinner from '../spinner/Spinner';
 
 const CharList = (props) => {
     
@@ -61,7 +61,7 @@ const CharList = (props) => {
     
     const itemList = listView(data)
     const errorMessage = error ? <ErrorMessage/> : null
-    const spinner = loading && !newItemLoading ? <Spinner/> : null
+    const spinner = loading && newItemLoading ? <Spinner/> : null
        
     return (
         <div className="char__list">
